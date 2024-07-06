@@ -4,6 +4,7 @@ use std::{
     io::{prelude::*, BufReader},
     net::{TcpListener, TcpStream},
     path::Path,
+    thread,
 };
 
 fn main() {
@@ -17,10 +18,12 @@ fn main() {
         let stream = stream.unwrap();
 
         pool.execute(|| {
-        handle_connection(stream);
+            handle_connection(stream);
         });
 
     }
+
+    println!("Shutting down.");
 }
 
 fn handle_connection(mut stream: TcpStream) {
